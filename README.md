@@ -1,10 +1,15 @@
-# Tracker Official Invite Graph
+# TrackersInfo Invite Graph
 
-[The Graph](https://inviteroute.github.io/graph/)
+[v3](https://forkedritz.github.io/Recruitments/Graphs/v3)
 
-How to contribute more data to The Graph, in order of preference:
+Last Updated - 2025-02-28
 
-  * Send screenshots using [Reddit ModMail](https://www.reddit.com/message/compose?to=/r/TrackersInfo)
-  * Post in [this thread](https://www.sb-innovation.de/showthread.php?9925)
-  * Edit [this wiki](https://www.reddit.com/r/TrackersInfo/wiki/official_recruitments/)
-  * Post in [/ptg/](https://4chan.org/g/ptg) (very rarely checked, please avoid)
+![v3](https://github.com/user-attachments/assets/9f072cfe-ed7b-4fad-a3b4-0b3d02394c7f)
+
+[v2](https://forkedritz.github.io/Recruitments/Graphs/v2) - Not Useful
+
+![Graphv2 2025-02-28](https://github.com/user-attachments/assets/f15268b4-ec03-4f99-818b-5176ac14f1a0)
+
+[v1](https://forkedritz.github.io/Recruitments/Graphs/v1) - Not Useful
+
+Fork of [The Graph](https://inviteroute.github.io/graph/) using data from [/r/TrackersInfo](https://old.reddit.com/r/TrackersInfo/wiki/official_recruitments)
