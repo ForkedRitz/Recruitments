@@ -2,7 +2,7 @@
 
 [v3](https://forkedritz.github.io/Recruitments/Graphs/v3)
 
-Last Updated - 2025-02-28
+Last Updated - 2025/02/28
 
 ![v3](https://github.com/user-attachments/assets/3cef8c01-6d42-4f7e-9365-e97ef2848ee4)
 
