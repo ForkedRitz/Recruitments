@@ -1,6 +1,10 @@
 # TrackersInfo Invite Graph
 
-[v3](https://forkedritz.github.io/Recruitments/Graphs/v3)
+### v3
+
+[Main Graph](https://forkedritz.github.io/Recruitments/Graphs/v3) / [Base Routes](https://forkedritz.github.io/Recruitments/Graphs/v3/Base%20Routes/)
+
+"Base Routes" only uses routes requiring the lowest user class(es) that can access the invite forums (Starting class + 1 class higher / PU)
 
 Last Updated - 2025/02/28
 
