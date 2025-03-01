@@ -4,11 +4,11 @@
 
 Last Updated - 2025-02-28
 
-![v3](https://github.com/user-attachments/assets/9f072cfe-ed7b-4fad-a3b4-0b3d02394c7f)
+![v3](https://github.com/user-attachments/assets/3cef8c01-6d42-4f7e-9365-e97ef2848ee4)
 
 [v2](https://forkedritz.github.io/Recruitments/Graphs/v2) - Not Useful
 
-![Graphv2 2025-02-28](https://github.com/user-attachments/assets/f15268b4-ec03-4f99-818b-5176ac14f1a0)
+![v2](https://github.com/user-attachments/assets/37d675db-d84d-432f-a7d4-b37c374445ed)
 
 [v1](https://forkedritz.github.io/Recruitments/Graphs/v1) - Not Useful
 
