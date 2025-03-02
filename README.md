@@ -4,7 +4,7 @@
 
 [Main Graph](https://forkedritz.github.io/Recruitments/Graphs/v3) / [Base Routes](https://forkedritz.github.io/Recruitments/Graphs/v3/Base%20Routes/)
 
-"Base Routes" only uses routes requiring the lowest user class(es) that have access to the invite forums (Starting class + 1 class higher / PU)
+"Base Routes" only uses routes requiring the lowest user class(es) that can access to the invite forums (Starting class + 1 class higher / PU)
 
 Last Updated - 2025/03/01
 
