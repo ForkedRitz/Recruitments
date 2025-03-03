@@ -6,7 +6,7 @@
 
 "Base Routes" only uses routes requiring the lowest user class(es) that can access the invite forums (Starting class + 1 class higher / PU)
 
-Last Updated - 2025/03/01
+Routes Last Updated - 2025/03/01
 
 ![v3](https://github.com/user-attachments/assets/e56aca9a-45a0-43ef-8c27-66c104de3fcf)
 
