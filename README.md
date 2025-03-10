@@ -2,9 +2,11 @@
 
 ### v3
 
-[Main Graph](https://forkedritz.github.io/Recruitments/Graphs/v3) / [Base Routes](https://forkedritz.github.io/Recruitments/Graphs/v3/Base%20Routes/)
+[Main Graph](https://forkedritz.github.io/Recruitments/Graphs/v3)
 
-"Base Routes" only uses routes requiring the lowest user class(es) that can access the invite forums (Starting class + 1 class higher / PU)
+[Base Routes](https://forkedritz.github.io/Recruitments/Graphs/v3/Base%20Routes/) - Only uses routes requiring the lowest user class(es) that can access the invite forums (Starting class + 1 class higher / PU)
+
+[Excluding Music](https://forkedritz.github.io/Recruitments/Graphs/v3/Excluding%20Music/) - Excludes routes leading from "starting" music trackers (RED / OPS)
 
 Routes Last Updated - 2025/03/07
 
