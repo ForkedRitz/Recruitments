@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta name="description" content="ForkedGraph :: Excluding Music" />
+	<meta name="description" content="ForkedGraph" />
 	<meta charset=utf-8 />
 	<meta name="viewport" content="user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, minimal-ui">
-	<title>ForkedGraph :: Excluding Music</title>
+	<title>ForkedGraph</title>
 	<style>
 	html, body { 
 		font: 16px sans-serif;
@@ -270,11 +270,13 @@
 {data:{id:"HUNO",name:"hawke-uno",info:"No official recruitment"}},
 {data:{id:"iTS",name:"inTheShadow",info:"No additional information"}},
 {data:{id:"nC",name:"nCore",info:"No additional information"}},
+{data:{id:"LDU",name:"LDU",info:"No additional information"}},
 
 // ",days:" Uses minimum account age for the required class, excluding classes using seedsize (if possible)
+{data:{source:"Aither",target:"ANT",info:"Prometheus+",days:243}},
 {data:{source:"Aither",target:"BHD",info:"Gigantes Rank: 40 TiB upload or 40 TiB seedsize, 1.50 ratio, 12 months account age, 3 months avg. seedtime, 15 uploads",days:365}},
 {data:{source:"Aither",target:"UP",info:"Harmonia+,5 uploads",days:243}},
-{data:{source:"Aither",target:"CRT",info:"Prometheus+, ratio >= 1",days:243}},
+{data:{source:"Aither",target:"CRT",info:"Prometheus+, 1 year, ratio >= 1",days:365}},
 {data:{source:"Aither",target:"HUNO",info:"Prometheus+",days:243}},
 {data:{source:"Aither",target:"iS",info:"Prometheus+",days:243}},
 {data:{source:"Aither",target:"LST",info:"Prometheus+",days:243}},
@@ -395,11 +397,10 @@
 {data:{source:"CRT",target:"HUNO",info:"No additional information",days:112}},
 {data:{source:"CRT",target:"iA",info:"No additional information",days:112}},
 
-{data:{source:"CG",target:"Aither",info:"No requirement",days:0}},
-{data:{source:"CG",target:"BdC",info:"PU+, 2 months account age",days:60}},
+{data:{source:"CG",target:"Aither",info:"Superfan+, 6 months",days:182}},
 {data:{source:"CG",target:"GPW",info:"PU+, 10 torrents",days:0}},
 {data:{source:"CG",target:"MAM",info:"No requirement",days:0}},
-{data:{source:"CG",target:"OPS",info:"6 months account age, ratio>1.5",days:182}},
+{data:{source:"CG",target:"OPS",info:"Superfan+, 6 months, ratio>1.5",days:182}},
 {data:{source:"CG",target:"SG",info:"No requirement",days:0}},
 {data:{source:"CG",target:"TSh",info:"No requirement",days:0}},
 {data:{source:"CG",target:"TG",info:"No requirement",days:0}},
@@ -409,23 +410,28 @@
 {data:{source:"CZ",target:"EZ",info:"10k bp, Member Rank, 4 months account age, seeding 5 torrents, ratio>2.0, 300 GB",days:121}},
 {data:{source:"CZ",target:"PHD",info:"10k bp, Member Rank, 4 months account age, seeding 5 torrents, ratio>2.0, 300 GB",days:121}},
 
-{data:{source:"Emp",target:"PxC",info:"Great Perv+",days:56}},
+{data:{source:"Emp",target:"Aither",info:"Great Perv+",days:56}},
 {data:{source:"Emp",target:"AB",info:"Sextreme Perv+, 12 months account age",days:365}},
-{data:{source:"Emp",target:"ANT",info:"Great Perv+",days:56}},
+{data:{source:"Emp",target:"ANT",info:"No requirement",days:56}},
 {data:{source:"Emp",target:"GGn",info:"Great Perv+, 3 months account age",days:91}},
-{data:{source:"Emp",target:"IMT",info:"Great Perv+, 3 profile links and screenshots",days:56}},
+{data:{source:"Emp",target:"IMT",info:"Backstory, 3 profile links and screenshots",days:56}},
 {data:{source:"Emp",target:"MTV",info:"Great Perv+, ratio>1.5, 6 months account age",days:182}},
-{data:{source:"Emp",target:"OPS",info:"Great Perv+",days:56}},
+{data:{source:"Emp",target:"OPS",info:"No requirement",days:56}},
+{data:{source:"Emp",target:"PxC",info:"Great Perv+",days:56}},
 {data:{source:"Emp",target:"PB",info:"Great Perv+, 6 months account age",days:182}},
+{data:{source:"Emp",target:"RFX",info:"No requirement",days:56}},
 {data:{source:"Emp",target:"SM",info:"Great Perv+",days:56}},
 {data:{source:"Emp",target:"UHDB",info:"Great Perv+",days:56}},
+{data:{source:"Emp",target:"UNW",info:"No requirement",days:56}},
 
 {data:{source:"EZ",target:"AZ",info:"10k bp, Member Rank, 4 months account age, seeding 5 torrents, ratio>2.0, 300 GB",days:121}},
 {data:{source:"EZ",target:"CZ",info:"10k bp, Member Rank, 4 months account age, seeding 5 torrents, ratio>2.0, 300 GB",days:121}},
 {data:{source:"EZ",target:"PHD",info:"10k bp, Member Rank, 4 months account age, seeding 5 torrents, ratio>2.0, 300 GB",days:121}},
 
 {data:{source:"FNP",target:"ULCX",info:"SuperUser",days:60}},
-{data:{source:"FNP",target:"LST",info:"4 months account age, avg seed time >= 10 days",days:121}},
+{data:{source:"FNP",target:"LDU",info:"No requirement",days:60}},
+{data:{source:"FNP",target:"LST",info:"4 months account age, avg seed time >= 6 days",days:121}},
+{data:{source:"FNP",target:"OTW",info:"Seeder, 3 months",days:91}},
 {data:{source:"FNP",target:"PSS",info:"1TB real upload, avg seed time >= 5 days, 90 days account age",days:90}},
 {data:{source:"FNP",target:"RFX",info:"No requirement",days:60}},
 
@@ -517,39 +523,38 @@
 {data:{source:"MTV",target:"Portugas",info:"3 months account age",days:91}},
 {data:{source:"MTV",target:"UHDB",info:"No requirement",days:56}},
 
-{data:{source:"MAM",target:"Aither",info:"PU+, 3 months account age",days:182}},
 {data:{source:"MAM",target:"ABT",info:"Some profile links and ratio proofs",days:182}},
+{data:{source:"MAM",target:"Aither",info:"3 months",days:182}},
+{data:{source:"MAM",target:"ANT",info:"3 months",days:182}},
 {data:{source:"MAM",target:"BBT",info:"PU+, 6 months account age",days:182}},
 {data:{source:"MAM",target:"BHDTV",info:"6 months account age, ratio>1",days:182}},
-{data:{source:"MAM",target:"CS",info:"PU+, 12 months account age",days:365}},
-{data:{source:"MAM",target:"CGP",info:"PU+, 12 months account age, ratio>2, 500 GB Upload or VIP+, 6 months account age, ratio>1, 1 TB Upload",days:365}},
+{data:{source:"MAM",target:"CS",info:"PU+, 1 year account age",days:365}},
+{data:{source:"MAM",target:"CGP",info:"PU+, 1 year account age, ratio>2, 500 GB Upload or VIP+, 6 months, ratio>1, 1 TB Upload",days:365}},
 {data:{source:"MAM",target:"DCC",info:"No requirement",days:182}},
 {data:{source:"MAM",target:"iA",info:"PU+, real ratio>1.5, 12 months account age",days:365}},
 {data:{source:"MAM",target:"IMT",info:"3 1y+ old profile links",days:182}},
 {data:{source:"MAM",target:"LST",info:"No requirement",days:182}},
 {data:{source:"MAM",target:"Milkie",info:"No requirement",days:182}},
 {data:{source:"MAM",target:"OTW",info:"6 months on MAM or other tracker, 1 TB uploaded, 500 GB downloaded",days:182}},
-{data:{source:"MAM",target:"OE",info:"3 months account age",days:182}},
 {data:{source:"MAM",target:"OPS",info:"2 Years account age",days:730}},
-{data:{source:"MAM",target:"PxC",info:"No requirement",days:182}},
 {data:{source:"MAM",target:"PxHD",info:"Elite or high-level PU, 3x 6 months old profile links (including MAM)",days:182}},
-{data:{source:"MAM",target:"PSS",info:"3 months account age, 1TB upload",days:91}},
+{data:{source:"MAM",target:"PSS",info:"90 days account age, 1TB upload",days:90}},
 {data:{source:"MAM",target:"RFX",info:"No requirement",days:182}},
 {data:{source:"MAM",target:"SC",info:"VIP+, 50GB upload, 6 months account age",days:182}},
 {data:{source:"MAM",target:"Shazbat",info:"VIP+, 6 months account age",days:182}},
 {data:{source:"MAM",target:"TE",info:"No requirement",days:182}},
-{data:{source:"MAM",target:"UNW",info:"PU+, 25 uploads",days:182}},
+{data:{source:"MAM",target:"UNW",info:"PU+, 25 seeded uploads",days:182}},
 {data:{source:"MAM",target:"XS",info:"VIP+, ratio>1, 6 months account age",days:182}},
 
 {data:{source:"NBL",target:"Aither",info:"No requirement",days:28}},
 {data:{source:"NBL",target:"ANT",info:"No requirement",days:28}},
-{data:{source:"NBL",target:"BBT",info:"No requirement",days:28}},
-{data:{source:"NBL",target:"BLU",info:"3 months account age",days:91}},
+{data:{source:"NBL",target:"BBT",info:"Ensign+, 3 months account age",days:91}},
 {data:{source:"NBL",target:"CRT",info:"6 months account age",days:182}},
-{data:{source:"NBL",target:"GPW",info:"Flattop+, 8 weeks account age, 250GB, 250 snatches, 250k bp",days:56}},
-{data:{source:"NBL",target:"OPS",info:"3 months account age",days:91}},
-{data:{source:"NBL",target:"PHD",info:"Raptor+, 32 weeks account age, 1TB, 1000 snatches, 850k bp",days:224}},
+{data:{source:"NBL",target:"GPW",info:"Flattop+ (8 weeks account age, 250GB, 250 snatches, 250k bp)",days:56}},
+{data:{source:"NBL",target:"OPS",info:"No requirement",days:28}},
+{data:{source:"NBL",target:"PHD",info:"Raptor+ (32 weeks account age, 1TB, 1000 snatches, 850k bp)",days:224}},
 {data:{source:"NBL",target:"RFX",info:"No requirement",days:28}},
+{data:{source:"NBL",target:"RF",info:"No requirement",days:28}},
 
 {data:{source:"PTP",target:"Aither",info:"No requirement",days:28}},
 {data:{source:"PTP",target:"AR",info:"3 months account age, ratio>1.0",days:91}},
@@ -626,12 +631,12 @@
 
 {data:{source:"U2",target:"KamePT",info:"No additional information",days:0}},
 
-{data:{source:"UHDB",target:"Aither",info:"Ratio>1.0, 4 months account age",days:121}},
+{data:{source:"UHDB",target:"Aither",info:"No requirement",days:56}},
 {data:{source:"UHDB",target:"Dajiao PT",info:"No requirement",days:56}},
-{data:{source:"UHDB",target:"FL",info:"6 months account age",days:182}},
-{data:{source:"UHDB",target:"iA",info:"Ratio>1.4, 1 year account age",days:365}},
+{data:{source:"UHDB",target:"FL",info:"Extreme+, 6 months account age",days:182}},
+{data:{source:"UHDB",target:"iA",info:"Power+, 1.4 ratio, 1 year account age (Still need Extreme+ to access invites)",days:365}},
 {data:{source:"UHDB",target:"OPS",info:"No requirement",days:56}},
-{data:{source:"UHDB",target:"RFX",info:"Seedsize>100GB",days:56}}],
+{data:{source:"UHDB",target:"RFX",info:"No requirement",days:56}}],
 		style: [ {
 			selector: "node",
 			style: {
@@ -757,7 +762,6 @@
 				nodes.$id("PTer"),
 				nodes.$id("KamePT"),
                 nodes.$id("U2"),
-                nodes.$id("JPS"),
 			],
 			"central": [
             	nodes.$id("AR"),
@@ -829,11 +833,11 @@
 		const r1 = 15*cen.length;
 		const r2 = 15*chi.length
 		circle(cen, {x: 0, y: 0}, r1);
-		circle(chi, {x: 200+r1+r2, y: 100}, r2);
+		circle(chi, {x: 200+r1+r2, y: 0}, r2);
 
 		for (const key of Object.keys(clusters)) {
 			if (!Array.isArray(clusters[key])) {
-				circle(clusters[key], positions[key], 150 * clusters[key].length, key);
+				circle(clusters[key], positions[key], 15 * clusters[key].length, key);
 			}
 		}
 
@@ -1013,8 +1017,8 @@
 
 	setupPathfindSelect(sourceSelect);
 	setupPathfindSelect(targetSelect);
-	sourceSelect.value = "MAM";
-	targetSelect.value = "MAM";
+	sourceSelect.value = "RED";
+	targetSelect.value = "RED";
 	pathfind();
 
 	// Options: Show path description
