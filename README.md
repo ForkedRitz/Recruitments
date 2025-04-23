@@ -1,6 +1,14 @@
 # ForkedGraph
 
-### v3
+### v4
+
+[Main Graph](https://forkedritz.github.io/Recruitments/Graphs/V4)
+
+![V4](https://github.com/user-attachments/assets/83f3dbb7-00af-49aa-b4b3-4ebbe50733dc)
+
+---
+
+#### v3 - Outdated + Buggy
 
 [Main Graph](https://forkedritz.github.io/Recruitments/Graphs/v3)
 
@@ -10,11 +18,11 @@
 
 ![v3](https://github.com/user-attachments/assets/6377d823-4cfa-4c03-8e7a-c7df28e537d6)
 
-[v2](https://forkedritz.github.io/Recruitments/Graphs/v2) - Not Useful
+#### [v2](https://forkedritz.github.io/Recruitments/Graphs/v2) - Not Useful
 
 ![v2](https://github.com/user-attachments/assets/37d675db-d84d-432f-a7d4-b37c374445ed)
 
-[v1](https://forkedritz.github.io/Recruitments/Graphs/v1) - Not Functional
+#### [v1](https://forkedritz.github.io/Recruitments/Graphs/v1) - Not Functional
 
 ![v1](https://github.com/user-attachments/assets/cb8e086d-43c3-4782-b961-e997eedb2044)
 
