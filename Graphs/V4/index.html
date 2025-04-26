@@ -1048,15 +1048,18 @@
     }
 
     let yearnum = res.distance/365;
-    if (res.path.length <= 1)
-      document.getElementById("pathdesc").innerHTML = "";
-    else
-      document.getElementById("pathdesc").innerHTML = res.path.map(x => {
-        return (x.isNode()
-          ? x.id() + " (" + x.data("name") + ")"
-          : x.data("source") + " → " + x.data("target"))
-        + ": " + x.data("info");
-      }).join("<br><br><br>") + "<br><br>Total: " + res.distance + " days (" + yearnum.toFixed(1) + " years)";
+if (res.path.length <= 1) {
+  document.getElementById("pathdesc").innerHTML = "";
+} else {
+  document.getElementById("pathdesc").innerHTML = res.path.map(x => {
+    return (x.isNode()
+      ? x.id() + " (" + x.data("name") + ")"
+      : x.data("source") + " → " + x.data("target"))
+    + ": " + x.data("info");
+  }).join("<br><br><br>") + "<br><br>Total: " + res.distance + " days (" + 
+  // Modified yearnum formatting to remove trailing zero
+  yearnum.toFixed(2).replace(/\.?0+$/, '') + " years)";
+}
 
     cy.batch(() => {
       cy.elements().forEach(n => n.data("path", false));
