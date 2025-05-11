@@ -27,3 +27,5 @@
 ![v1](https://github.com/user-attachments/assets/cb8e086d-43c3-4782-b961-e997eedb2044)
 
 Fork of [The Graph](https://inviteroute.github.io/graph/) using data from [/r/TrackersInfo](https://old.reddit.com/r/TrackersInfo/wiki/official_recruitments)
+
+I got the graph settings idea from [Invite.icu](https://invite.icu/) / [GitHub](https://github.com/ti-or/ti-or.github.io/)
