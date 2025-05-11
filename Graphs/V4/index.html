@@ -1,87 +1,218 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta name="description" content="ForkedGraph" />
+  <meta name="description" content="Graph with fixed max days functionality" />
   <meta charset=utf-8 />
   <meta name="viewport" content="user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, minimal-ui">
-  <title>ForkedGraph</title>
+  <title>Graph with Fixed Max Days</title>
   <style>
-  html, body { 
-    font: 16px sans-serif;
-    color: #fff;
-    width: 100%;
-    height: 100%;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-  }
+    html, body { 
+      font: 16px sans-serif;
+      color: #fff;
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
 
-  #cy {
-    position: absolute;
-    left: 0;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    background: #000;
-  }
-  #options {
-    position: absolute;
-    top: 0.5em;
-    right: 0.5em;
-    background: rgba(0,0,0,0.7);
-    padding: 10px;
-    border-radius: 5px;
-  }
-  #pathfind {
-    position: absolute;
-    top: 0.5em;
-    left: 0.5em;
-    max-width: 600px;
-    background: rgba(0,0,0,0.7);
-    padding: 10px;
-    border-radius: 5px;
-  }
-  #pathdesc {
-    position: absolute;
-    bottom: 0.5em;
-    left: 0.5em;
-    max-width: 600px;
-    pointer-events: none;
-    z-index: 99999;
-    background: rgba(0,0,0,0.7);
-    padding: 10px;
-    border-radius: 5px;
-  }
-  .pathfind-option {
-    margin: 5px 0;
-  }
-  label {
-    cursor: pointer;
-  }
-  button {
-    cursor: pointer;
-    padding: 5px 10px;
-    background: #444;
-    color: white;
-    border: none;
-    border-radius: 3px;
-  }
-  button:hover {
-    background: #555;
-  }
-  select {
-    padding: 3px;
-    background: #333;
-    color: white;
-    border: 1px solid #555;
-    border-radius: 3px;
-  }
+    #cy {
+      position: absolute;
+      left: 0;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      background: #000;
+    }
+    
+    #options {
+      position: absolute;
+      top: 0.5em;
+      right: 0.5em;
+      background: rgba(0,0,0,0.7);
+      padding: 10px;
+      border-radius: 5px;
+    }
+    
+    #pathfind {
+      position: absolute;
+      top: 0.5em;
+      left: 0.5em;
+      max-width: 600px;
+      background: rgba(0,0,0,0.7);
+      padding: 10px;
+      border-radius: 5px;
+    }
+    
+    #pathdesc {
+      position: absolute;
+      bottom: 0.5em;
+      left: 0.5em;
+      max-width: 600px;
+      pointer-events: none;
+      z-index: 99999;
+      background: rgba(0,0,0,0.7);
+      padding: 10px;
+      border-radius: 5px;
+    }
+    
+    .pathfind-option {
+      margin: 5px 0;
+    }
+    
+    label {
+      cursor: pointer;
+    }
+    
+    button {
+      cursor: pointer;
+      padding: 5px 10px;
+      background: #444;
+      color: white;
+      border: none;
+      border-radius: 3px;
+    }
+    
+    button:hover {
+      background: #555;
+    }
+    
+    button:disabled {
+      background: #333;
+      color: #777;
+      cursor: not-allowed;
+    }
+    
+    select, input {
+      padding: 3px;
+      background: #333;
+      color: white;
+      border: 1px solid #555;
+      border-radius: 3px;
+    }
+    
+    /* Searchable dropdown styles */
+    .searchable-dropdown {
+      position: relative;
+      display: inline-block;
+      width: 180px;
+    }
+    
+    .searchable-dropdown input {
+      width: 100%;
+      box-sizing: border-box;
+    }
+    
+    .searchable-dropdown .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: #333;
+      min-width: 100%;
+      max-height: 300px;
+      overflow-y: auto;
+      border: 1px solid #555;
+      z-index: 1;
+      border-radius: 0 0 3px 3px;
+    }
+    
+    .searchable-dropdown .dropdown-content.show {
+      display: block;
+    }
+    
+    .searchable-dropdown .dropdown-item {
+      color: white;
+      padding: 5px 10px;
+      text-decoration: none;
+      display: block;
+      cursor: pointer;
+    }
+    
+    .searchable-dropdown .dropdown-item:hover {
+      background-color: #555;
+    }
+    
+    /* Path controls styles */
+    .path-controls {
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid #555;
+    }
+    
+    .path-control-group {
+      display: flex;
+      align-items: center;
+      margin-bottom: 5px;
+    }
+    
+    .path-control-group label {
+      min-width: 80px;
+      margin-right: 5px;
+    }
+    
+    .path-nav {
+      display: flex;
+      gap: 5px;
+      margin-top: 5px;
+    }
+    
+    .path-info {
+      font-size: 12px;
+      color: #ccc;
+      margin-left: 5px;
+    }
+    
+    input[type="number"] {
+      width: 50px;
+    }
+    
+    /* Add hover area styles */
+    .path-nav-hover-area {
+      position: relative;
+      display: flex;
+      gap: 5px;
+      margin-top: 5px;
+      padding: 10px;
+      border-radius: 3px;
+      transition: background-color 0.2s;
+    }
+    
+    .path-nav-hover-area:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+    
+    .scroll-controls {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 100%;
+      display: flex;
+      justify-content: space-between;
+      pointer-events: none;
+    }
+    
+    .scroll-controls button {
+      pointer-events: auto;
+      opacity: 0;
+      transition: opacity 0.2s;
+      width: 40px;
+      height: 100%;
+      background: transparent;
+      border: none;
+      color: white;
+      font-size: 16px;
+    }
+    
+    .path-nav-hover-area:hover .scroll-controls button {
+      opacity: 1;
+    }
   </style>
 </head>
 <body>
   <div id="cy">
     <div id="pathdesc"></div>
   </div>
+  
   <div id="options">
     <input type="checkbox" id="abbrev" checked />
     <label for="abbrev">Abbreviate names</label><br>
@@ -100,17 +231,61 @@
 
     <button id="relayout">Refresh layout</button>
   </div>
-  <div id="pathfind">
-    <div class="pathfind-option">
-      Source: <select id="source-select"><option value="any">Any</option><option value="all">All</option></select><br>
-      Target: <select id="target-select"></select>
-    </div>
-
-</div>
+  
+  	</div>
   <div style="position:absolute;bottom:0.5em;right:0.5em;text-align:right;background:rgba(0,0,0,0.7);padding:10px;border-radius:5px;">
     <a href="https://github.com/ForkedRitz/Recruitments" style="color:#f0f">GitHub</a><br>
     Credits to <a href="https://github.com/inviteroute/graph" style="color:#f0f">The Graph</a> and <a href="https://old.reddit.com/r/TrackersInfo/wiki/official_recruitments" style="color:#f0f">/r/TrackersInfo</a><br>
     Routes Last Updated - 2025 / 05 / 10
+  </div>
+  
+  <div id="pathfind">
+    <div class="pathfind-option">
+      <div style="margin-bottom: 10px;">
+        <label for="source-search">Source:</label>
+        <div class="searchable-dropdown">
+          <input type="text" id="source-search" placeholder="Search source..." autocomplete="off">
+          <div id="source-dropdown" class="dropdown-content"></div>
+        </div>
+      </div>
+      <div>
+        <label for="target-search">Target:</label>
+        <div class="searchable-dropdown">
+          <input type="text" id="target-search" placeholder="Search target..." autocomplete="off">
+          <div id="target-dropdown" class="dropdown-content"></div>
+        </div>
+      </div>
+    </div>
+	
+    <!-- Modified path controls section with hover area -->
+    <div class="path-controls">
+      <div class="path-control-group">
+        <label for="max-days">Max Days:</label>
+        <input type="number" id="max-days" min="1" value="1095">
+      </div>
+      <div class="path-control-group">
+        <label for="max-jumps">Max Jumps:</label>
+        <input type="number" id="max-jumps" min="1" value="5">
+      </div>
+      <div class="path-control-group">
+        <label for="sort-by">Sort By:</label>
+        <select id="sort-by">
+          <option value="days">Total Days</option>
+          <option value="jumps">Fewest Jumps</option>
+        </select>
+      </div>
+      <div class="path-nav-hover-area">
+        <div class="path-nav">
+          <button id="prev-path" disabled>← Prev</button>
+          <button id="next-path" disabled>Next →</button>
+          <span id="path-counter" class="path-info">No paths</span>
+        </div>
+        <div class="scroll-controls">
+          <button id="scroll-prev"></button>
+          <button id="scroll-next"></button>
+        </div>
+      </div>
+    </div>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/cytoscape@3.23.0/dist/cytoscape.min.js"></script>
@@ -119,6 +294,18 @@
   <script src="https://cdn.jsdelivr.net/npm/tippy.js@6/dist/tippy.umd.min.js"></script>
 
   <script type="text/javascript">
+  // Store all found paths and current path index
+  let allPaths = [];
+  let currentPathIndex = -1;
+  
+  // Store current view state
+  let currentZoom = 1;
+  let currentPan = { x: 0, y: 0 };
+
+  // Store selected source and target
+  let selectedSource = null;
+  let selectedTarget = null;
+
   const cy = cytoscape({
     container: document.getElementById("cy"),
     elements: [
@@ -785,17 +972,17 @@
         }
       },
       {
-      selector: "node[group='Cabal']",
-		style: {
-		  "border-color": "Gold",
-		  "border-width": "3px"
+        selector: "node[group='Cabal']",
+        style: {
+          "border-color": "Gold",
+          "border-width": "3px"
         }
       },
       {
-      selector: "node[group='IPT']",
-		style: {
-		  "border-color": "Red",
-		  "border-width": "3px"
+        selector: "node[group='IPT']",
+        style: {
+          "border-color": "Red",
+          "border-width": "3px"
         }
       },
       {
@@ -845,9 +1032,111 @@
     ]
   });
 
-  // Store current view state
-  let currentZoom = 1;
-  let currentPan = { x: 0, y: 0 };
+  // Initialize searchable dropdowns
+  function initializeSearchableDropdowns() {
+    const nodes = cy.nodes();
+    const sourceDropdown = document.getElementById('source-dropdown');
+    const targetDropdown = document.getElementById('target-dropdown');
+    const sourceSearch = document.getElementById('source-search');
+    const targetSearch = document.getElementById('target-search');
+    
+    // Add "Any" and "All" options to source dropdown
+    const anyOption = document.createElement('div');
+    anyOption.className = 'dropdown-item';
+    anyOption.textContent = 'Any';
+    anyOption.onclick = function() {
+      selectedSource = 'any';
+      sourceSearch.value = 'Any';
+      sourceDropdown.classList.remove('show');
+      recalculatePaths();
+    };
+    sourceDropdown.appendChild(anyOption);
+    
+    const allOption = document.createElement('div');
+    allOption.className = 'dropdown-item';
+    allOption.textContent = 'All';
+    allOption.onclick = function() {
+      selectedSource = 'all';
+      sourceSearch.value = 'All';
+      sourceDropdown.classList.remove('show');
+      recalculatePaths();
+    };
+    sourceDropdown.appendChild(allOption);
+    
+    // Populate dropdowns with node data
+    nodes.forEach(node => {
+      const nodeId = node.id();
+      const nodeName = node.data('name');
+      const displayText = `${nodeId}: ${nodeName}`;
+      
+      // Add to source dropdown
+      const sourceItem = document.createElement('div');
+      sourceItem.className = 'dropdown-item';
+      sourceItem.textContent = displayText;
+      sourceItem.onclick = function() {
+        selectedSource = nodeId;
+        sourceSearch.value = displayText;
+        sourceDropdown.classList.remove('show');
+        recalculatePaths();
+      };
+      sourceDropdown.appendChild(sourceItem);
+      
+      // Add to target dropdown
+      const targetItem = document.createElement('div');
+      targetItem.className = 'dropdown-item';
+      targetItem.textContent = displayText;
+      targetItem.onclick = function() {
+        selectedTarget = nodeId;
+        targetSearch.value = displayText;
+        targetDropdown.classList.remove('show');
+        recalculatePaths();
+      };
+      targetDropdown.appendChild(targetItem);
+    });
+    
+    // Add search functionality
+    sourceSearch.addEventListener('input', function() {
+      const filter = this.value.toUpperCase();
+      const items = sourceDropdown.getElementsByClassName('dropdown-item');
+      
+      for (let i = 0; i < items.length; i++) {
+        const text = items[i].textContent || items[i].innerText;
+        if (text.toUpperCase().indexOf(filter) > -1) {
+          items[i].style.display = "";
+        } else {
+          items[i].style.display = "none";
+        }
+      }
+      sourceDropdown.classList.add('show');
+    });
+    
+    targetSearch.addEventListener('input', function() {
+      const filter = this.value.toUpperCase();
+      const items = targetDropdown.getElementsByClassName('dropdown-item');
+      
+      for (let i = 0; i < items.length; i++) {
+        const text = items[i].textContent || items[i].innerText;
+        if (text.toUpperCase().indexOf(filter) > -1) {
+          items[i].style.display = "";
+        } else {
+          items[i].style.display = "none";
+        }
+      }
+      targetDropdown.classList.add('show');
+    });
+    
+    // Close dropdowns when clicking outside
+    document.addEventListener('click', function(event) {
+      if (!event.target.matches('.searchable-dropdown input')) {
+        const dropdowns = document.getElementsByClassName('dropdown-content');
+        for (let i = 0; i < dropdowns.length; i++) {
+          if (dropdowns[i].classList.contains('show')) {
+            dropdowns[i].classList.remove('show');
+          }
+        }
+      }
+    });
+  }
 
   // Save current view state
   function saveViewState() {
@@ -859,6 +1148,244 @@
   function restoreViewState() {
     cy.zoom(currentZoom);
     cy.pan(currentPan);
+  }
+
+  // Find all paths between source and target with current filters
+  function findAllPaths(sourceId, targetId) {
+    const maxJumps = parseInt(document.getElementById('max-jumps').value) || 5;
+    const maxDays = parseInt(document.getElementById('max-days').value) || 365;
+    const excludeMusic = document.getElementById('exclude_music').checked;
+    const sortBy = document.getElementById('sort-by').value;
+    
+    // Filter edges if excluding music trackers
+    const edgesToUse = excludeMusic 
+      ? cy.edges().filter(e => e.data('source') !== 'OPS' && e.data('source') !== 'RED')
+      : cy.edges();
+    
+    // Convert to adjacency list for pathfinding
+    const graph = {};
+    edgesToUse.forEach(edge => {
+      const source = edge.data('source');
+      const target = edge.data('target');
+      const days = edge.data('days');
+      const info = edge.data('info');
+      
+      if (!graph[source]) graph[source] = [];
+      graph[source].push({ target, days, info, edgeId: edge.id() });
+    });
+    
+    // BFS with priority queue to find all paths
+    const paths = [];
+    const queue = [{ 
+      node: sourceId, 
+      path: [sourceId], 
+      edges: [], 
+      totalDays: 0, 
+      jumps: 0 
+    }];
+    
+    while (queue.length > 0) {
+      const current = queue.shift();
+      
+      if (current.node === targetId) {
+        // Only add path if total days is within limit
+        if (current.totalDays <= maxDays) {
+          paths.push({
+            nodes: current.path,
+            edges: current.edges,
+            totalDays: current.totalDays,
+            jumps: current.jumps
+          });
+        }
+        continue;
+      }
+      
+      if (current.jumps >= maxJumps || !graph[current.node]) {
+        continue;
+      }
+      
+      // Sort neighbors by days to prioritize faster routes
+      const neighbors = [...graph[current.node]].sort((a, b) => a.days - b.days);
+      
+      for (const neighbor of neighbors) {
+        if (!current.path.includes(neighbor.target)) {
+          const newTotalDays = current.totalDays + neighbor.days;
+          // Only continue if the new total days is within limit
+          if (newTotalDays <= maxDays) {
+            queue.push({
+              node: neighbor.target,
+              path: [...current.path, neighbor.target],
+              edges: [...current.edges, neighbor],
+              totalDays: newTotalDays,
+              jumps: current.jumps + 1
+            });
+          }
+        }
+      }
+    }
+    
+    // Sort paths based on current sort option
+    if (sortBy === 'days') {
+      paths.sort((a, b) => a.totalDays - b.totalDays);
+    } else {
+      paths.sort((a, b) => a.jumps - b.jumps);
+    }
+    
+    return paths;
+  }
+
+  // Path navigation functions with wrap-around
+  function prevPath() {
+    if (allPaths.length === 0) return;
+    
+    if (currentPathIndex <= 0) {
+      // Wrap around to last path
+      showPath(allPaths.length - 1);
+    } else {
+      showPath(currentPathIndex - 1);
+    }
+  }
+
+  function nextPath() {
+    if (allPaths.length === 0) return;
+    
+    if (currentPathIndex >= allPaths.length - 1) {
+      // Wrap around to first path
+      showPath(0);
+    } else {
+      showPath(currentPathIndex + 1);
+    }
+  }
+
+  // Show a specific path by index
+  function showPath(index) {
+    if (allPaths.length === 0) {
+      document.getElementById('path-counter').textContent = 'No paths';
+      document.getElementById('prev-path').disabled = true;
+      document.getElementById('next-path').disabled = true;
+      return;
+    }
+    
+    // Handle index out of bounds (shouldn't happen with the new navigation functions)
+    if (index < 0) index = allPaths.length - 1;
+    if (index >= allPaths.length) index = 0;
+    
+    currentPathIndex = index;
+    const path = allPaths[index];
+    
+    // Update path counter display
+    document.getElementById('path-counter').textContent = 
+      `Path ${index + 1} of ${allPaths.length} (${path.jumps} jumps)`;
+    
+    // Navigation buttons are never disabled now since we wrap around
+    document.getElementById('prev-path').disabled = false;
+    document.getElementById('next-path').disabled = false;
+    
+    // Highlight the path in the graph
+    saveViewState();
+    cy.batch(() => {
+      // Clear previous path highlights
+      cy.elements().removeData('path');
+      
+      // Highlight nodes in path
+      path.nodes.forEach(nodeId => {
+        const node = cy.$id(nodeId);
+        if (node) node.data('path', true);
+      });
+      
+      // Highlight edges in path
+      path.edges.forEach(edge => {
+        const edgeEl = cy.$id(edge.edgeId);
+        if (edgeEl) edgeEl.data('path', true);
+      });
+      
+      // Update display based on current options
+      updateDeadends();
+    });
+    restoreViewState();
+    
+    // Update path description
+    updatePathDescription(path);
+  }
+
+  // Update the path description display with improved formatting
+  function updatePathDescription(path) {
+    if (!path || !document.getElementById('showpathdesc').checked) {
+      document.getElementById('pathdesc').innerHTML = '';
+      return;
+    }
+    
+    let html = '';
+    let totalDays = 0;
+    
+    path.nodes.forEach((nodeId, i) => {
+      // Add node info first
+      const node = cy.$id(nodeId).data();
+      html += `<strong>${node.id} (${node.name})</strong>: ${node.info}<br><br>`;
+      
+      // Then add edge info if not the last node
+      if (i < path.nodes.length - 1) {
+        const edge = path.edges[i];
+        html += `${node.id} → ${path.nodes[i+1]}: ${edge.info} (${edge.days} days)<br><br>`;
+        totalDays += edge.days;
+      }
+    });
+    
+    html += `<br><strong>Total: ${totalDays} days (${(totalDays / 365).toFixed(2)} years)</strong>`;
+    document.getElementById('pathdesc').innerHTML = html;
+  }
+
+  // Setup event listeners for new controls
+  document.getElementById('prev-path').addEventListener('click', prevPath);
+  document.getElementById('next-path').addEventListener('click', nextPath);
+  
+  // Add scroll button event listeners
+  document.getElementById('scroll-prev').addEventListener('click', prevPath);
+  document.getElementById('scroll-next').addEventListener('click', nextPath);
+  
+  // Add mouse wheel support for the hover area
+  const pathNavHoverArea = document.querySelector('.path-nav-hover-area');
+  pathNavHoverArea.addEventListener('wheel', (e) => {
+    e.preventDefault();
+    if (e.deltaY > 0) {
+      nextPath();
+    } else {
+      prevPath();
+    }
+  });
+  
+  document.getElementById('max-days').addEventListener('change', recalculatePaths);
+  document.getElementById('max-jumps').addEventListener('change', recalculatePaths);
+  document.getElementById('sort-by').addEventListener('change', recalculatePaths);
+  document.getElementById('exclude_music').addEventListener('change', recalculatePaths);
+  document.getElementById('showpathdesc').addEventListener('change', () => {
+    if (currentPathIndex >= 0) {
+      updatePathDescription(allPaths[currentPathIndex]);
+    }
+  });
+
+  // Recalculate all paths when filters change
+  function recalculatePaths() {
+    if (!selectedSource || !selectedTarget || selectedSource === selectedTarget) {
+      allPaths = [];
+      currentPathIndex = -1;
+      document.getElementById('path-counter').textContent = 'No paths';
+      document.getElementById('prev-path').disabled = true;
+      document.getElementById('next-path').disabled = true;
+      return;
+    }
+    
+    allPaths = findAllPaths(selectedSource, selectedTarget);
+    currentPathIndex = allPaths.length > 0 ? 0 : -1;
+    
+    if (allPaths.length > 0) {
+      showPath(0);
+    } else {
+      document.getElementById('path-counter').textContent = 'No paths found';
+      document.getElementById('prev-path').disabled = true;
+      document.getElementById('next-path').disabled = true;
+      document.getElementById('pathdesc').innerHTML = '';
+    }
   }
 
   // Two-circle layout (connected nodes vs dead ends)
@@ -921,7 +1448,6 @@
     restoreViewState();
   };
   abbrev.addEventListener("change", updateAbbrev);
-  updateAbbrev();
 
   // Options: Remove dead ends
   let deadends = cy.nodes().leaves();
@@ -935,7 +1461,7 @@
     cy.elements().removeClass("hide");
 
     if (nodeadends.checked)
-      cy.$(".deadend[!path]").addClass("hide");
+      cy.$(".deadend").addClass("hide");
 
     if (pathonly.checked)
       cy.$("[!path]").addClass("hide");
@@ -1009,122 +1535,19 @@
     }
   });
 
-  // Pathfinding with combined exclusion option
-  const pathfind = () => {
-    saveViewState();
-    const excludeMusic = document.getElementById("exclude_music").checked;
-    
-    if (sourceSelect.value == "any" || sourceSelect.value == "all") {
-      document.getElementById("pathdesc").innerHTML = "";
-      cy.batch(() => {
-        let target = cy.$id(targetSelect.value);
-        cy.elements().forEach(n => n.data("path", false));
-        target.data("path", true);
-        (sourceSelect.value == "all" ? target.predecessors() : target.incomers())
-          .forEach(n => n.data("path", true));
-      });
-      updateDeadends();
-      restoreViewState();
-      return;
-    }
-
-    // Create a filtered collection of edges to exclude from pathfinding
-    let excludedEdges = cy.collection();
-    if (excludeMusic) {
-      excludedEdges = excludedEdges.union(cy.$('edge[source="OPS"]'));
-      excludedEdges = excludedEdges.union(cy.$('edge[source="RED"]'));
-    }
-
-    // Create a filtered graph for pathfinding
-    const filteredGraph = cy.elements().difference(excludedEdges);
-    
-    let res = filteredGraph.aStar({
-      root: cy.$id(sourceSelect.value),
-      goal: cy.$id(targetSelect.value),
-      weight: (edge) => edge.data("days"),
-      directed: true
-    });
-
-    if (!res.found) {
-      shownTippy = tippy("#pathfind", {
-        trigger: "manual",
-        arrow: true,
-        placement: "bottom",
-        hideOnClick: false,
-        duration: [250, 0],
-        sticky: "reference",
-        theme: "light",
-        interactive: true,
-
-        content: "No path found" + 
-          (excludeMusic ? 
-            " (with music trackers excluded)" : ""),
-
-        onHidden: function(tip) {
-          if (tip != null) {
-            tip.destroy();
-          }
-        }
-      })[0];
-      shownTippy.show();
-
-      document.getElementById("pathdesc").innerHTML = "";
-      restoreViewState();
-      return;
-    }
-
-    let yearnum = res.distance/365;
-if (res.path.length <= 1) {
-  document.getElementById("pathdesc").innerHTML = "";
-} else {
-  document.getElementById("pathdesc").innerHTML = res.path.map(x => {
-    return (x.isNode()
-      ? x.id() + " (" + x.data("name") + ")"
-      : x.data("source") + " → " + x.data("target"))
-    + ": " + x.data("info");
-  }).join("<br><br><br>") + "<br><br>Total: " + res.distance + " days (" + 
-  // Modified yearnum formatting to remove trailing zero
-  yearnum.toFixed(2).replace(/\.?0+$/, '') + " years)";
-}
-
-    cy.batch(() => {
-      cy.elements().forEach(n => n.data("path", false));
-      res.path.forEach(n => n.data("path", true));
-      updateDeadends();
-    });
-    restoreViewState();
-  };
-
-  // Setup pathfinding controls
-  const sourceSelect = document.getElementById("source-select");
-  const targetSelect = document.getElementById("target-select");
-  const excludeMusic = document.getElementById("exclude_music");
-
-  const setupPathfindSelect = (select) => {
-    cy.nodes().forEach(node => {
-      select.add(new Option(node.id() + ": " + node.data().name, node.id()));
-    });
-
-    select.addEventListener("change", pathfind);
-  };
-
-  setupPathfindSelect(sourceSelect);
-  setupPathfindSelect(targetSelect);
-  sourceSelect.value = "RED";
-  targetSelect.value = "RED";
-  
-  // Add event listener for exclusion checkbox
-  excludeMusic.addEventListener("change", pathfind);
+  // Initialize the graph
+  cy.ready(() => {
+    initializeSearchableDropdowns();
+    updateAbbrev();
+    updateDeadends();
+    cy.layout(createTwoCircleLayout()).run();
+  });
 
   // Options: Show path description
   const showpathdesc = document.getElementById("showpathdesc");
   showpathdesc.addEventListener("change", () => {
     document.getElementById("pathdesc").style["display"] = showpathdesc.checked ? "" : "none";
   });
-
-  // Initial layout and pathfind
-  cy.layout(createTwoCircleLayout()).run();
-  pathfind();
   </script>
 </body>
 </html>
