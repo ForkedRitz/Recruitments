@@ -257,7 +257,6 @@
       </div>
     </div>
 	
-    <!-- Modified path controls section with hover area -->
     <div class="path-controls">
       <div class="path-control-group">
         <label for="max-days">Max Days:</label>
@@ -1043,6 +1042,10 @@
     const sourceSearch = document.getElementById('source-search');
     const targetSearch = document.getElementById('target-search');
     
+    // Clear existing dropdowns
+    sourceDropdown.innerHTML = '';
+    targetDropdown.innerHTML = '';
+    
     // Add "Any" and "All" options to source dropdown
     const anyOption = document.createElement('div');
     anyOption.className = 'dropdown-item';
@@ -1176,8 +1179,82 @@
       if (!graph[source]) graph[source] = [];
       graph[source].push({ target, days, info, edgeId: edge.id() });
     });
+
+    // Handle "Any" source case - find all direct connections to target
+    if (sourceId === 'any') {
+      const directConnections = [];
+      const incomingEdges = edgesToUse.filter(e => e.data('target') === targetId);
+      
+      incomingEdges.forEach(edge => {
+        const source = edge.data('source');
+        const days = edge.data('days');
+        const info = edge.data('info');
+        
+        // Only include if within max days
+        if (days <= maxDays) {
+          directConnections.push({
+            nodes: [source, targetId],
+            edges: [{ target: targetId, days, info, edgeId: edge.id() }],
+            totalDays: days,
+            jumps: 1
+          });
+        }
+      });
+      
+      // Sort results properly
+      directConnections.sort((a, b) => {
+        if (sortBy === 'days') {
+          return a.totalDays - b.totalDays;
+        } else {
+          return a.jumps - b.jumps;
+        }
+      });
+      
+      return directConnections;
+    }
+
+    // Handle "All" source case - find all nodes that can reach target
+    if (sourceId === 'all') {
+      const allPaths = [];
+      
+      // Get all nodes except target
+      const allNodes = cy.nodes().map(n => n.id()).filter(id => id !== targetId);
+      
+      // Find paths from each node to target
+      for (const nodeId of allNodes) {
+        const pathsFromNode = findPathsFromSource(nodeId, targetId, graph, maxJumps, maxDays);
+        allPaths.push(...pathsFromNode);
+      }
+      
+      // Sort results properly
+      allPaths.sort((a, b) => {
+        if (sortBy === 'days') {
+          return a.totalDays - b.totalDays;
+        } else {
+          return a.jumps - b.jumps;
+        }
+      });
+      
+      return allPaths;
+    }
+
+    // Normal case - find paths from specific source to target
+    const paths = findPathsFromSource(sourceId, targetId, graph, maxJumps, maxDays);
     
-    // BFS with priority queue to find all paths
+    // Sort results properly
+    paths.sort((a, b) => {
+      if (sortBy === 'days') {
+        return a.totalDays - b.totalDays;
+      } else {
+        return a.jumps - b.jumps;
+      }
+    });
+    
+    return paths;
+  }
+
+  // Helper function to find paths from a specific source to target
+  function findPathsFromSource(sourceId, targetId, graph, maxJumps, maxDays) {
     const paths = [];
     const queue = [{ 
       node: sourceId, 
@@ -1225,13 +1302,6 @@
           }
         }
       }
-    }
-    
-    // Sort paths based on current sort option
-    if (sortBy === 'days') {
-      paths.sort((a, b) => a.totalDays - b.totalDays);
-    } else {
-      paths.sort((a, b) => a.jumps - b.jumps);
     }
     
     return paths;
@@ -1293,13 +1363,19 @@
       // Highlight nodes in path
       path.nodes.forEach(nodeId => {
         const node = cy.$id(nodeId);
-        if (node) node.data('path', true);
+        if (node) {
+          node.data('path', true);
+          node.removeClass("deadend"); // Ensure path nodes are never treated as dead ends
+        }
       });
       
       // Highlight edges in path
       path.edges.forEach(edge => {
         const edgeEl = cy.$id(edge.edgeId);
-        if (edgeEl) edgeEl.data('path', true);
+        if (edgeEl) {
+          edgeEl.data('path', true);
+          edgeEl.removeClass("deadend"); // Ensure path edges are never treated as dead ends
+        }
       });
       
       // Update display based on current options
@@ -1338,35 +1414,6 @@
     document.getElementById('pathdesc').innerHTML = html;
   }
 
-  // Setup event listeners for new controls
-  document.getElementById('prev-path').addEventListener('click', prevPath);
-  document.getElementById('next-path').addEventListener('click', nextPath);
-  
-  // Add scroll button event listeners
-  document.getElementById('scroll-prev').addEventListener('click', prevPath);
-  document.getElementById('scroll-next').addEventListener('click', nextPath);
-  
-  // Add mouse wheel support for the hover area
-  const pathNavHoverArea = document.querySelector('.path-nav-hover-area');
-  pathNavHoverArea.addEventListener('wheel', (e) => {
-    e.preventDefault();
-    if (e.deltaY > 0) {
-      nextPath();
-    } else {
-      prevPath();
-    }
-  });
-  
-  document.getElementById('max-days').addEventListener('change', recalculatePaths);
-  document.getElementById('max-jumps').addEventListener('change', recalculatePaths);
-  document.getElementById('sort-by').addEventListener('change', recalculatePaths);
-  document.getElementById('exclude_music').addEventListener('change', recalculatePaths);
-  document.getElementById('showpathdesc').addEventListener('change', () => {
-    if (currentPathIndex >= 0) {
-      updatePathDescription(allPaths[currentPathIndex]);
-    }
-  });
-
   // Recalculate all paths when filters change
   function recalculatePaths() {
     if (!selectedSource || !selectedTarget || selectedSource === selectedTarget) {
@@ -1394,7 +1441,7 @@
   // Two-circle layout (connected nodes vs dead ends)
   function createTwoCircleLayout() {
     // Identify dead ends
-    const deadends = cy.nodes().leaves();
+    const deadends = cy.nodes().filter(node => node.outgoers('edge').length === 0);
     const connectedNodes = cy.nodes().difference(deadends);
     
     // Calculate positions
@@ -1438,6 +1485,48 @@
     };
   }
 
+  // Update the dead ends identification and hiding logic
+  function updateDeadends() {
+    saveViewState();
+    cy.elements().removeClass("hide");
+
+    // First identify all dead ends (nodes with no outgoing edges)
+    const deadends = cy.nodes().filter(node => {
+      return node.outgoers('edge').length === 0;
+    });
+
+    // Mark dead ends
+    deadends.addClass("deadend");
+    
+    // Also mark edges leading to dead ends
+    deadends.incomers('edge').addClass("deadend");
+
+    if (nodeadends.checked) {
+      // Hide dead ends and edges leading to them
+      cy.$(".deadend").addClass("hide");
+      
+      // But don't hide dead ends that are part of the current path
+      if (currentPathIndex >= 0 && allPaths[currentPathIndex]) {
+        const pathNodes = allPaths[currentPathIndex].nodes;
+        const pathEdges = allPaths[currentPathIndex].edges.map(e => e.edgeId);
+        
+        pathNodes.forEach(nodeId => {
+          cy.$id(nodeId).removeClass("hide");
+        });
+        
+        pathEdges.forEach(edgeId => {
+          cy.$id(edgeId).removeClass("hide");
+        });
+      }
+    }
+
+    if (pathonly.checked) {
+      cy.$("[!path]").addClass("hide");
+    }
+
+    restoreViewState();
+  }
+
   // Options: Abbreviate tracker names
   const abbrev = document.getElementById("abbrev");
   const updateAbbrev = () => {
@@ -1453,27 +1542,10 @@
   abbrev.addEventListener("change", updateAbbrev);
 
   // Options: Remove dead ends
-  let deadends = cy.nodes().leaves();
-  deadends.addClass("deadend");
-  cy.nodes().edgesTo(deadends).addClass("deadend");
-
   const pathonly = document.getElementById("pathonly");
   const nodeadends = document.getElementById("nodeadends");
-  const updateDeadends = () => {
-    saveViewState();
-    cy.elements().removeClass("hide");
-
-    if (nodeadends.checked)
-      cy.$(".deadend").addClass("hide");
-
-    if (pathonly.checked)
-      cy.$("[!path]").addClass("hide");
-
-    restoreViewState();
-  };
-
-  pathonly.addEventListener("change", updateDeadends);
   nodeadends.addEventListener("change", updateDeadends);
+  pathonly.addEventListener("change", updateDeadends);
 
   // Layout
   document.getElementById("relayout").addEventListener("click", () => {
@@ -1535,6 +1607,35 @@
       makeTippy(tgt, data.id + " (" + data.name + ")<br/>" + data.info);
     } else {
       removeTippy();
+    }
+  });
+
+  // Setup event listeners for new controls
+  document.getElementById('prev-path').addEventListener('click', prevPath);
+  document.getElementById('next-path').addEventListener('click', nextPath);
+  
+  // Add scroll button event listeners
+  document.getElementById('scroll-prev').addEventListener('click', prevPath);
+  document.getElementById('scroll-next').addEventListener('click', nextPath);
+  
+  // Add mouse wheel support for the hover area
+  const pathNavHoverArea = document.querySelector('.path-nav-hover-area');
+  pathNavHoverArea.addEventListener('wheel', (e) => {
+    e.preventDefault();
+    if (e.deltaY > 0) {
+      nextPath();
+    } else {
+      prevPath();
+    }
+  });
+  
+  document.getElementById('max-days').addEventListener('change', recalculatePaths);
+  document.getElementById('max-jumps').addEventListener('change', recalculatePaths);
+  document.getElementById('sort-by').addEventListener('change', recalculatePaths);
+  document.getElementById('exclude_music').addEventListener('change', recalculatePaths);
+  document.getElementById('showpathdesc').addEventListener('change', () => {
+    if (currentPathIndex >= 0) {
+      updatePathDescription(allPaths[currentPathIndex]);
     }
   });
 
