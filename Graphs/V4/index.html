@@ -206,6 +206,72 @@
     .path-nav-hover-area:hover .scroll-controls button {
       opacity: 1;
     }
+
+    /* Group selector styles */
+    .group-selector {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    
+    .group-selector label {
+      margin-right: 10px;
+    }
+    
+    .settings-button {
+      margin-left: 10px;
+      padding: 2px 6px;
+      font-size: 12px;
+      background: #444;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+    
+    .settings-button:hover {
+      background: #555;
+    }
+    
+    .settings-panel {
+      position: absolute;
+      top: 0;
+      left: 255px;
+      background: rgba(0,0,0,0.9);
+      padding: 10px;
+      border-radius: 5px;
+      z-index: 1000;
+      max-height: 300px;
+      width: 300px;
+      display: none;
+    }
+    
+    .settings-panel.show {
+      display: block;
+    }
+    
+    .settings-search {
+      width: 96%;
+      margin-bottom: 10px;
+      padding: 5px;
+      background: #333;
+      color: white;
+      border: 1px solid #555;
+      border-radius: 3px;
+    }
+    
+    .source-checkbox-container {
+      max-height: 250px;
+      overflow-y: auto;
+    }
+    
+    .source-checkbox {
+      margin: 5px 0;
+      display: flex;
+      align-items: center;
+    }
+    
+    .source-checkbox input {
+      margin-right: 8px;
+    }
   </style>
 </head>
 <body>
@@ -232,7 +298,6 @@
     <button id="relayout">Refresh layout</button>
   </div>
   
-  	</div>
   <div style="position:absolute;bottom:0.5em;right:0.5em;text-align:right;background:rgba(0,0,0,0.7);padding:10px;border-radius:5px;">
     <a href="https://github.com/ForkedRitz/Recruitments" style="color:#f0f">GitHub</a><br>
     Credits to <a href="https://github.com/inviteroute/graph" style="color:#f0f">The Graph</a> and <a href="https://old.reddit.com/r/TrackersInfo/wiki/official_recruitments" style="color:#f0f">/r/TrackersInfo</a><br>
@@ -242,10 +307,24 @@
   <div id="pathfind">
     <div class="pathfind-option">
       <div style="margin-bottom: 10px;">
-        <label for="source-search">Source:</label>
-        <div class="searchable-dropdown">
-          <input type="text" id="source-search" placeholder="Search source..." autocomplete="off">
-          <div id="source-dropdown" class="dropdown-content"></div>
+        <div class="group-selector">
+          <label for="source-type">Source Type:</label>
+          <select id="source-type">
+            <option value="single">Single</option>
+            <option value="group">Group</option>
+          </select>
+          <button id="settings-button" class="settings-button" style="display: none;">Settings</button>
+        </div>
+        <div id="single-source" style="display: block;">
+          <label for="source-search">Source:</label>
+          <div class="searchable-dropdown">
+            <input type="text" id="source-search" placeholder="Search source..." autocomplete="off">
+            <div id="source-dropdown" class="dropdown-content"></div>
+          </div>
+        </div>
+        <div id="group-sources" class="settings-panel">
+          <input type="text" id="group-search" class="settings-search" placeholder="Search sources..." autocomplete="off">
+          <div class="source-checkbox-container" id="source-checkbox-container"></div>
         </div>
       </div>
       <div>
@@ -305,6 +384,17 @@
   let selectedSource = null;
   let selectedTarget = null;
 
+  // Group selection variables
+  const STORAGE_KEY = 'selectedSources';
+  let selectedSources = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+  const sourceTypeSelect = document.getElementById('source-type');
+  const settingsButton = document.getElementById('settings-button');
+  const singleSourceDiv = document.getElementById('single-source');
+  const groupSourcesDiv = document.getElementById('group-sources');
+  const groupSearchInput = document.getElementById('group-search');
+  const sourceCheckboxContainer = document.getElementById('source-checkbox-container');
+
+  // Initialize Cytoscape
   const cy = cytoscape({
     container: document.getElementById("cy"),
     elements: [
@@ -1053,6 +1143,78 @@
     ]
   });
 
+  // Handle source type changes
+  function handleSourceTypeChange() {
+    if (sourceTypeSelect.value === 'group') {
+      singleSourceDiv.style.display = 'none';
+      settingsButton.style.display = 'inline-block';
+      selectedSource = 'group';
+      recalculatePaths();
+    } else {
+      singleSourceDiv.style.display = 'block';
+      settingsButton.style.display = 'none';
+      groupSourcesDiv.classList.remove('show');
+      selectedSource = null;
+      recalculatePaths();
+    }
+  }
+  
+  // Initialize the group sources panel
+  function initializeGroupSourcesPanel() {
+    const nodes = cy.nodes();
+    sourceCheckboxContainer.innerHTML = '';
+    
+    nodes.forEach(node => {
+      const nodeId = node.id();
+      const nodeName = node.data('name');
+      const checkbox = document.createElement('div');
+      checkbox.className = 'source-checkbox';
+      checkbox.dataset.name = `${nodeId}: ${nodeName}`.toLowerCase();
+      
+      const input = document.createElement('input');
+      input.type = 'checkbox';
+      input.id = `source-${nodeId}`;
+      input.value = nodeId;
+      input.checked = selectedSources.includes(nodeId);
+      input.addEventListener('change', () => {
+        if (input.checked) {
+          if (!selectedSources.includes(nodeId)) {
+            selectedSources.push(nodeId);
+          }
+        } else {
+          selectedSources = selectedSources.filter(id => id !== nodeId);
+        }
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(selectedSources));
+        recalculatePaths();
+      });
+      
+      const label = document.createElement('label');
+      label.htmlFor = `source-${nodeId}`;
+      label.textContent = `${nodeId}: ${nodeName}`;
+      
+      checkbox.appendChild(input);
+      checkbox.appendChild(label);
+      sourceCheckboxContainer.appendChild(checkbox);
+    });
+  }
+
+  // Add search functionality for group sources
+  function setupGroupSearch() {
+    groupSearchInput.addEventListener('input', function() {
+      const searchTerm = this.value.toLowerCase();
+      const checkboxes = sourceCheckboxContainer.querySelectorAll('.source-checkbox');
+      
+      checkboxes.forEach(checkbox => {
+        const displayName = checkbox.dataset.name;
+        if (displayName.includes(searchTerm)) {
+          checkbox.style.display = 'flex';
+        } else {
+          checkbox.style.display = 'none';
+        }
+      });
+    });
+  }
+
   // Initialize searchable dropdowns
   function initializeSearchableDropdowns() {
     const nodes = cy.nodes();
@@ -1241,6 +1403,28 @@
       
       // Find paths from each node to target
       for (const nodeId of allNodes) {
+        const pathsFromNode = findPathsFromSource(nodeId, targetId, graph, maxJumps, maxDays);
+        allPaths.push(...pathsFromNode);
+      }
+      
+      // Sort results properly
+      allPaths.sort((a, b) => {
+        if (sortBy === 'days') {
+          return a.totalDays - b.totalDays;
+        } else {
+          return a.jumps - b.jumps;
+        }
+      });
+      
+      return allPaths;
+    }
+
+    // Handle group source case
+    if (sourceId === 'group' && selectedSources.length > 0) {
+      const allPaths = [];
+      
+      // Find paths from each selected source to target
+      for (const nodeId of selectedSources) {
         const pathsFromNode = findPathsFromSource(nodeId, targetId, graph, maxJumps, maxDays);
         allPaths.push(...pathsFromNode);
       }
@@ -1629,11 +1813,9 @@
     }
   });
 
-  // Setup event listeners for new controls
+  // Setup event listeners for controls
   document.getElementById('prev-path').addEventListener('click', prevPath);
   document.getElementById('next-path').addEventListener('click', nextPath);
-  
-  // Add scroll button event listeners
   document.getElementById('scroll-prev').addEventListener('click', prevPath);
   document.getElementById('scroll-next').addEventListener('click', nextPath);
   
@@ -1661,6 +1843,8 @@
   // Initialize the graph
   cy.ready(() => {
     initializeSearchableDropdowns();
+    initializeGroupSourcesPanel();
+    setupGroupSearch();
     updateAbbrev();
     updateDeadends();
     cy.layout(createTwoCircleLayout()).run();
@@ -1670,6 +1854,20 @@
   const showpathdesc = document.getElementById("showpathdesc");
   showpathdesc.addEventListener("change", () => {
     document.getElementById("pathdesc").style["display"] = showpathdesc.checked ? "" : "none";
+  });
+
+  // Event listeners for group selection
+  sourceTypeSelect.addEventListener('change', handleSourceTypeChange);
+  settingsButton.addEventListener('click', (e) => {
+    e.stopPropagation();
+    groupSourcesDiv.classList.toggle('show');
+  });
+  
+  // Close settings panel when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!groupSourcesDiv.contains(e.target) && e.target !== settingsButton) {
+      groupSourcesDiv.classList.remove('show');
+    }
   });
   </script>
 </body>
