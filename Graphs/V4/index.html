@@ -5,7 +5,8 @@
   <meta charset=utf-8 />
   <meta name="viewport" content="user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, minimal-ui">
 <link rel="icon" href="https://i.ibb.co/3mxKdS9f/PATH.png" type="image/png">
-  <title>ForkedGraph v4</title>
+    <link rel="stylesheet" href="https://csstyles.pages.dev/ForkedGraph/ChristmasSnow.css">
+	<title>ForkedGraph v4</title>
   <style>
     html, body { 
       font: 16px sans-serif;
@@ -50,13 +51,15 @@
       bottom: 0.5em;
       left: 0.5em;
       max-width: 600px;
-      pointer-events: none;
+      max-height: 500px;
+      overflow-y: auto;
+      pointer-events: auto;
       z-index: 99999;
       background: rgba(0,0,0,0.7);
       padding: 10px;
       border-radius: 5px;
     }
-    
+
     .pathfind-option {
       margin: 5px 0;
     }
@@ -131,7 +134,11 @@
     .searchable-dropdown .dropdown-item:hover {
       background-color: #555;
     }
-    
+
+    #toggle-pathfind {
+      width: 70px;
+    }
+
     /* Path controls styles */
     .path-controls {
       margin-top: 10px;
@@ -304,8 +311,10 @@
     Credits to <a href="https://github.com/inviteroute/graph" style="color:#f0f">The Graph</a> and <a href="https://old.reddit.com/r/TrackersInfo/wiki/official_recruitments" style="color:#f0f">/r/TrackersInfo</a><br>
     Routes Last Updated - 🎄 2025 / 12 / 18
   </div>
-  
-  <div id="pathfind">
+
+<div id="pathfind">
+  <button id="toggle-pathfind" onclick="togglePathfind()">Hide 🪄</button>
+  <div id="pathfind-content">
     <div class="pathfind-option">
       <div style="margin-bottom: 10px;">
         <div class="group-selector">
@@ -336,7 +345,6 @@
         </div>
       </div>
     </div>
-	
     <div class="path-controls">
       <div class="path-control-group">
         <label for="max-days">Max Days:</label>
@@ -366,6 +374,20 @@
       </div>
     </div>
   </div>
+</div>
+<script>
+  function togglePathfind() {
+    const content = document.getElementById('pathfind-content');
+    const button = document.getElementById('toggle-pathfind');
+    if (content.style.display === 'none') {
+      content.style.display = 'block';
+      button.textContent = 'Hide 🪄';
+    } else {
+      content.style.display = 'none';
+      button.textContent = 'Show 🪄';
+    }
+  }
+</script>
 
   <script src="https://cdn.jsdelivr.net/npm/cytoscape@3.23.0/dist/cytoscape.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2/dist/umd/popper.min.js"></script>
