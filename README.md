@@ -14,7 +14,7 @@ Check out some of the better alternatives below.
 
   [/r/TrackersInfo](https://old.reddit.com/r/TrackersInfo/wiki/official_recruitments) ✨ - Tracker Invite Routes
 
-  [Tracker Pathways](https://trackerpathways.org/) ✨ / [Map](http://trackerpathways.org/map/) / [GitHub](https://github.com/handokota/trackerpathways)
+  [Tracker Pathways](https://trackerpathways.org/) ✨ / [Map](https://trackerpathways.org/map/) / [GitHub](https://github.com/handokota/trackerpathways)
 
   [The Graph](https://inviteroute.github.io/graph/) (Defunct) | [ForkedGraph](https://forkedritz.github.io/Recruitments/Graphs/V4/) - Tracker Invite Graphs
 
