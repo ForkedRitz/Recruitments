@@ -309,7 +309,7 @@
   <div style="position:absolute;bottom:0.5em;right:0.5em;text-align:right;background:rgba(0,0,0,0.7);padding:10px;border-radius:5px;">
 	<a href="https://github.com/ForkedRitz/Recruitments" style="color:#f0f">GitHub</a><br>
 	Credits to <a href="https://github.com/inviteroute/graph" style="color:#f0f">The Graph</a> and <a href="https://old.reddit.com/r/TrackersInfo/wiki/official_recruitments" style="color:#f0f">/r/TrackersInfo</a><br>
-	Routes Last Updated - 2026 / 05 / 06
+	Routes Last Updated - 2026 / 05 / 13
   </div>
 
 <div id="pathfind">
@@ -395,19 +395,15 @@
   <script src="https://cdn.jsdelivr.net/npm/tippy.js@6/dist/tippy.umd.min.js"></script>
 
   <script type="text/javascript">
-  // Store all found paths and current path index
   let allPaths = [];
   let currentPathIndex = -1;
   
-  // Store current view state
   let currentZoom = 1;
   let currentPan = { x: 0, y: 0 };
 
-  // Store selected source and target
   let selectedSource = null;
   let selectedTarget = null;
 
-  // Group selection variables
   const STORAGE_KEY = 'selectedSources';
   let selectedSources = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
   const sourceTypeSelect = document.getElementById('source-type');
@@ -417,11 +413,9 @@
   const groupSearchInput = document.getElementById('group-search');
   const sourceCheckboxContainer = document.getElementById('source-checkbox-container');
 
-  // Initialize Cytoscape
   const cy = cytoscape({
 	container: document.getElementById("cy"),
 	elements: [
-// Note: This graph was modified using AI
 {data:{id:"1PTBA",name:"1PTBA",info:"No additional information."}},
 {data:{id:"2xFree",name:"2xFree",info:"No additional information."}},
 {data:{id:"3Wmg",name:"3Wmg (芒果)",info:"No additional information."}},
@@ -489,7 +483,7 @@
 {data:{id:"FDC",name:"FemdomCult",info:"No additional information"}},
 {data:{id:"FF",name:"FunFile",info:"No additional information."}},
 {data:{id:"FL",name:"Filelist.io",info:"No invite forum"}},
-{data:{id:"FNP",name:"FearNoPeer",info:"Invite forum unlocks with Extreme User: 50 TiB Upload OR 15 TiB seedsize, ratio >= 0.8, avg seedtime >= 2 months, 10 uploads, 6 months account age"}},
+{data:{id:"FNP",name:"FearNoPeer",info:"Defunct"}},
 {data:{id:"FSM",name:"FSM (飞天拉面神教)",info:"No additional information."}},
 {data:{id:"FZ",name:"Fappaizuri",info:"No additional information"}},
 {data:{id:"GGn",name:"GazelleGames.net",info:"Invite forum unlocks with Pro Gamer: 1200 points, 30 days account age; Legendary Gamer: 3000 points, 90 days account age"}},
@@ -831,7 +825,6 @@
 
 {data:{source:"CBR",target:"DP",info:"No requirement",days:30}},
 {data:{source:"CBR",target:"F1C",info:"3 months account age",days:91}},
-{data:{source:"CBR",target:"FNP",info:"No requirement",days:30}},
 {data:{source:"CBR",target:"LST",info:"3 months account age",days:91}},
 {data:{source:"CBR",target:"LUME",info:"3 months account age",days:91}},
 {data:{source:"CBR",target:"OTW",info:"No requirement",days:30}},
@@ -853,7 +846,6 @@
 
 {data:{source:"DP",target:"BP",info:"No requirement",days:121}},
 {data:{source:"DP",target:"DCC",info:"No requirement",days:121}},
-{data:{source:"DP",target:"FNP",info:"No requirement",days:121}},
 {data:{source:"DP",target:"HHD",info:"2 additional proofs",days:121}},
 {data:{source:"DP",target:"LUME",info:"No requirement",days:121}},
 {data:{source:"DP",target:"SP",info:"1 TiB seeding size",days:121}},
@@ -873,13 +865,6 @@
 {data:{source:"EZ",target:"AZ",info:"Member Rank, 300 GB, ratio > 2.0, seeding 5 torrents, 10k bp, 4 months account age",days:121}},
 {data:{source:"EZ",target:"CZ",info:"Member Rank, 300 GB, ratio > 2.0, seeding 5 torrents, 10k bp, 4 months account age",days:121}},
 {data:{source:"EZ",target:"PHD",info:"Member Rank, 300 GB, ratio > 2.0, seeding 5 torrents, 10k bp, 4 months account age",days:121}},
-
-{data:{source:"FNP",target:"BS",info:"No requirement",days:182}},
-{data:{source:"FNP",target:"CBR",info:"No requirement",days:182}},
-{data:{source:"FNP",target:"OTW",info:"avg seedtime >= 6 months, 1 year account age",days:365}},
-{data:{source:"FNP",target:"RFX",info:"No requirement",days:182}},
-{data:{source:"FNP",target:"RTF",info:"No requirement",days:182}},
-{data:{source:"FNP",target:"ULCX",info:"No requirement",days:182}},
 
 {data:{source:"GGn",target:"ATH",info:"6 months account age",days:182}},
 {data:{source:"GGn",target:"AB",info:"Elite Gamer, 6 months account age",days:182}},
@@ -993,7 +978,6 @@
 
 {data:{source:"LDU",target:"BP",info:"8TB upload volume, 6 months account age, No warnings ever, 2x additional tracker profile screenshots (Not IPT, TL, FL, TD or low quality)",days:182}},
 {data:{source:"LDU",target:"FZ",info:"10TB upload size, Screenshot of personal data",days:0}},
-{data:{source:"LDU",target:"FNP",info:"No requirement",days:0}},
 {data:{source:"LDU",target:"HDC",info:"10TB upload size, Screenshots of your stats from well-known trackers",days:0}},
 {data:{source:"LDU",target:"KFC",info:"8TB upload volume, 6 months account age, No warnings ever, 2x additional tracker profile screenshots (Not IPT, TL, FL, TD or low quality)",days:182}},
 
@@ -1011,7 +995,6 @@
 
 {data:{source:"LUME",target:"BS",info:"No requirement",days:91}},
 {data:{source:"LUME",target:"DP",info:"No requirement",days:91}},
-{data:{source:"LUME",target:"FNP",info:"No requirement",days:91}},
 {data:{source:"LUME",target:"HHD",info:"6 months acount age",days:182}},
 {data:{source:"LUME",target:"RTF",info:"No requirement",days:91}},
 {data:{source:"LUME",target:"SP",info:"No requirement",days:91}},
@@ -1107,7 +1090,6 @@
 {data:{source:"OPS",target:"UNW",info:"No requirement",days:28}},
 {data:{source:"OPS",target:"XB",info:"1 year account age",days:365}},
 
-{data:{source:"OTW",target:"FNP",info:"No requirements",days:91}},
 {data:{source:"OTW",target:"BS",info:"No requirements",days:91}},
 
 {data:{source:"PTP",target:"ATH",info:"No requirement",days:28}},
@@ -1198,7 +1180,6 @@
 {data:{source:"RFX",target:"BS",info:"No requirement",days:90}},
 {data:{source:"RFX",target:"CBR",info:"No requirement",days:90}},
 {data:{source:"RFX",target:"FZ",info:"10TB upload size",days:90}},
-{data:{source:"RFX",target:"FNP",info:"No requirement",days:90}},
 {data:{source:"RFX",target:"HDC",info:"10TB upload size, (optional) additional tracker profile screenshots",days:90}},
 {data:{source:"RFX",target:"KFC",info:"8TB upload volume, 6 months account age, No warnings ever, 2x additional tracker profile screenshots (Not FL, IPT, TD, TL or low quality)",days:182}},
 {data:{source:"RFX",target:"LDU",info:"No requirement",days:90}},
@@ -1210,7 +1191,6 @@
 
 {data:{source:"RTF",target:"DCC",info:"No requirement",days:28}},
 {data:{source:"RTF",target:"DP",info:"No requirement",days:28}},
-{data:{source:"RTF",target:"FNP",info:"No requirement",days:28}},
 {data:{source:"RTF",target:"GPW",info:"upload 10 non music torrents or 5+ album torrents",days:28}},
 {data:{source:"RTF",target:"ILT",info:"No requirement",days:28}},
 {data:{source:"RTF",target:"LST",info:"No requirement",days:28}},
@@ -1236,7 +1216,6 @@
 {data:{source:"SP",target:"DP",info:"No requirement",days:182}},
 {data:{source:"SP",target:"HDC",info:"5 TB upload",days:182}},
 {data:{source:"SP",target:"HHD",info:"No requirement",days:182}},
-{data:{source:"SP",target:"LST",info:"9 months account age",days:273}},
 {data:{source:"SP",target:"LUME",info:"No requirement",days:182}},
 {data:{source:"SP",target:"RFX",info:"No requirement",days:182}},
 {data:{source:"SP",target:"RTF",info:"No requirement",days:182}},
@@ -1281,7 +1260,6 @@
 
 {data:{source:"ULCX",target:"DCC",info:"No requirement",days:14}},
 {data:{source:"ULCX",target:"DP",info:"No requirement",days:14}},
-{data:{source:"ULCX",target:"FNP",info:"No requirement",days:14}},
 {data:{source:"ULCX",target:"LST",info:"3 months account age",days:91}},
 {data:{source:"ULCX",target:"LUME",info:"3 months account age",days:91}},
 {data:{source:"ULCX",target:"RFX",info:"No requirement",days:14}},
@@ -1292,7 +1270,6 @@
 {data:{source:"YS",target:"CBR",info:"No requirement",days:30}},
 {data:{source:"YS",target:"DP",info:"No requirement",days:30}},
 {data:{source:"YS",target:"DCC",info:"No requirement",days:30}},
-{data:{source:"YS",target:"FNP",info:"No requirement",days:30}},
 {data:{source:"YS",target:"LUME",info:"3 months account age",days:91}},
 {data:{source:"YS",target:"SP",info:"No requirement",days:30}},
 {data:{source:"YS",target:"ULCX",info:"No requirement",days:30}},
@@ -1381,7 +1358,6 @@
 	]
   });
 
-  // Handle source type changes
   function handleSourceTypeChange() {
 	if (sourceTypeSelect.value === 'group') {
 	  singleSourceDiv.style.display = 'none';
@@ -1397,7 +1373,6 @@
 	}
   }
   
-  // Initialize the group sources panel
   function initializeGroupSourcesPanel() {
 	const nodes = cy.nodes();
 	sourceCheckboxContainer.innerHTML = '';
@@ -1436,7 +1411,6 @@
 	});
   }
 
-  // Add search functionality for group sources
   function setupGroupSearch() {
 	groupSearchInput.addEventListener('input', function() {
 	  const searchTerm = this.value.toLowerCase();
@@ -1453,7 +1427,6 @@
 	});
   }
 
-  // Initialize searchable dropdowns
   function initializeSearchableDropdowns() {
 	const nodes = cy.nodes();
 	const sourceDropdown = document.getElementById('source-dropdown');
@@ -1461,11 +1434,9 @@
 	const sourceSearch = document.getElementById('source-search');
 	const targetSearch = document.getElementById('target-search');
 	
-	// Clear existing dropdowns
 	sourceDropdown.innerHTML = '';
 	targetDropdown.innerHTML = '';
 	
-	// Add "Any" and "All" options to source dropdown
 	const anyOption = document.createElement('div');
 	anyOption.className = 'dropdown-item';
 	anyOption.textContent = 'Any';
@@ -1488,13 +1459,11 @@
 	};
 	sourceDropdown.appendChild(allOption);
 	
-	// Populate dropdowns with node data
 	nodes.forEach(node => {
 	  const nodeId = node.id();
 	  const nodeName = node.data('name');
 	  const displayText = `${nodeId}: ${nodeName}`;
 	  
-	  // Add to source dropdown
 	  const sourceItem = document.createElement('div');
 	  sourceItem.className = 'dropdown-item';
 	  sourceItem.textContent = displayText;
@@ -1506,7 +1475,6 @@
 	  };
 	  sourceDropdown.appendChild(sourceItem);
 	  
-	  // Add to target dropdown
 	  const targetItem = document.createElement('div');
 	  targetItem.className = 'dropdown-item';
 	  targetItem.textContent = displayText;
@@ -1519,7 +1487,6 @@
 	  targetDropdown.appendChild(targetItem);
 	});
 	
-	// Add search functionality
 	sourceSearch.addEventListener('input', function() {
 	  const filter = this.value.toUpperCase();
 	  const items = sourceDropdown.getElementsByClassName('dropdown-item');
@@ -1550,7 +1517,6 @@
 	  targetDropdown.classList.add('show');
 	});
 	
-	// Close dropdowns when clicking outside
 	document.addEventListener('click', function(event) {
 	  if (!event.target.matches('.searchable-dropdown input')) {
 		const dropdowns = document.getElementsByClassName('dropdown-content');
@@ -1563,31 +1529,26 @@
 	});
   }
 
-  // Save current view state
   function saveViewState() {
 	currentZoom = cy.zoom();
 	currentPan = cy.pan();
   }
 
-  // Restore saved view state
   function restoreViewState() {
 	cy.zoom(currentZoom);
 	cy.pan(currentPan);
   }
 
-  // Find all paths between source and target with current filters
   function findAllPaths(sourceId, targetId) {
 	const maxJumps = parseInt(document.getElementById('max-jumps').value) || 5;
 	const maxDays = parseInt(document.getElementById('max-days').value) || 365;
 	const excludeMusic = document.getElementById('exclude_music').checked;
 	const sortBy = document.getElementById('sort-by').value;
 	
-	// Filter edges if excluding music trackers
 	const edgesToUse = excludeMusic 
 	  ? cy.edges().filter(e => e.data('source') !== 'OPS' && e.data('source') !== 'RED')
 	  : cy.edges();
 	
-	// Convert to adjacency list for pathfinding
 	const graph = {};
 	edgesToUse.forEach(edge => {
 	  const source = edge.data('source');
@@ -1599,7 +1560,6 @@
 	  graph[source].push({ target, days, info, edgeId: edge.id() });
 	});
 
-	// Handle "Any" source case - find all direct connections to target
 	if (sourceId === 'any') {
 	  const directConnections = [];
 	  const incomingEdges = edgesToUse.filter(e => e.data('target') === targetId);
@@ -1609,7 +1569,6 @@
 		const days = edge.data('days');
 		const info = edge.data('info');
 		
-		// Only include if within max days
 		if (days <= maxDays) {
 		  directConnections.push({
 			nodes: [source, targetId],
@@ -1620,7 +1579,6 @@
 		}
 	  });
 	  
-	  // Sort results properly
 	  directConnections.sort((a, b) => {
 		if (sortBy === 'days') {
 		  return a.totalDays - b.totalDays;
@@ -1632,20 +1590,16 @@
 	  return directConnections;
 	}
 
-	// Handle "All" source case - find all nodes that can reach target
 	if (sourceId === 'all') {
 	  const allPaths = [];
 	  
-	  // Get all nodes except target
 	  const allNodes = cy.nodes().map(n => n.id()).filter(id => id !== targetId);
 	  
-	  // Find paths from each node to target
 	  for (const nodeId of allNodes) {
 		const pathsFromNode = findPathsFromSource(nodeId, targetId, graph, maxJumps, maxDays);
 		allPaths.push(...pathsFromNode);
 	  }
 	  
-	  // Sort results properly
 	  allPaths.sort((a, b) => {
 		if (sortBy === 'days') {
 		  return a.totalDays - b.totalDays;
@@ -1657,17 +1611,14 @@
 	  return allPaths;
 	}
 
-	// Handle group source case
 	if (sourceId === 'group' && selectedSources.length > 0) {
 	  const allPaths = [];
 	  
-	  // Find paths from each selected source to target
 	  for (const nodeId of selectedSources) {
 		const pathsFromNode = findPathsFromSource(nodeId, targetId, graph, maxJumps, maxDays);
 		allPaths.push(...pathsFromNode);
 	  }
 	  
-	  // Sort results properly
 	  allPaths.sort((a, b) => {
 		if (sortBy === 'days') {
 		  return a.totalDays - b.totalDays;
@@ -1679,10 +1630,8 @@
 	  return allPaths;
 	}
 
-	// Normal case - find paths from specific source to target
 	const paths = findPathsFromSource(sourceId, targetId, graph, maxJumps, maxDays);
 	
-	// Sort results properly
 	paths.sort((a, b) => {
 	  if (sortBy === 'days') {
 		return a.totalDays - b.totalDays;
@@ -1694,7 +1643,6 @@
 	return paths;
   }
 
-  // Helper function to find paths from a specific source to target
   function findPathsFromSource(sourceId, targetId, graph, maxJumps, maxDays) {
 	const paths = [];
 	const queue = [{ 
@@ -1709,7 +1657,6 @@
 	  const current = queue.shift();
 	  
 	  if (current.node === targetId) {
-		// Only add path if total days is within limit
 		if (current.totalDays <= maxDays) {
 		  paths.push({
 			nodes: current.path,
@@ -1725,13 +1672,11 @@
 		continue;
 	  }
 	  
-	  // Sort neighbors by days to prioritize faster routes
 	  const neighbors = [...graph[current.node]].sort((a, b) => a.days - b.days);
 	  
 	  for (const neighbor of neighbors) {
 		if (!current.path.includes(neighbor.target)) {
 		  const newTotalDays = current.totalDays + neighbor.days;
-		  // Only continue if the new total days is within limit
 		  if (newTotalDays <= maxDays) {
 			queue.push({
 			  node: neighbor.target,
@@ -1748,12 +1693,10 @@
 	return paths;
   }
 
-  // Path navigation functions with wrap-around
   function prevPath() {
 	if (allPaths.length === 0) return;
 	
 	if (currentPathIndex <= 0) {
-	  // Wrap around to last path
 	  showPath(allPaths.length - 1);
 	} else {
 	  showPath(currentPathIndex - 1);
@@ -1764,14 +1707,12 @@
 	if (allPaths.length === 0) return;
 	
 	if (currentPathIndex >= allPaths.length - 1) {
-	  // Wrap around to first path
 	  showPath(0);
 	} else {
 	  showPath(currentPathIndex + 1);
 	}
   }
 
-  // Show a specific path by index
   function showPath(index) {
 	if (allPaths.length === 0) {
 	  document.getElementById('path-counter').textContent = 'No paths';
@@ -1780,55 +1721,45 @@
 	  return;
 	}
 	
-	// Handle index out of bounds (shouldn't happen with the new navigation functions)
 	if (index < 0) index = allPaths.length - 1;
 	if (index >= allPaths.length) index = 0;
 	
 	currentPathIndex = index;
 	const path = allPaths[index];
 	
-	// Update path counter display
 	document.getElementById('path-counter').textContent = 
 	  `Path ${index + 1} of ${allPaths.length} (${path.jumps} jumps)`;
 	
-	// Navigation buttons are never disabled now since we wrap around
 	document.getElementById('prev-path').disabled = false;
 	document.getElementById('next-path').disabled = false;
 	
-	// Highlight the path in the graph
 	saveViewState();
 	cy.batch(() => {
-	  // Clear previous path highlights
 	  cy.elements().removeData('path');
 	  
-	  // Highlight nodes in path
 	  path.nodes.forEach(nodeId => {
 		const node = cy.$id(nodeId);
 		if (node) {
 		  node.data('path', true);
-		  node.removeClass("deadend"); // Ensure path nodes are never treated as dead ends
+		  node.removeClass("deadend");
 		}
 	  });
 	  
-	  // Highlight edges in path
 	  path.edges.forEach(edge => {
 		const edgeEl = cy.$id(edge.edgeId);
 		if (edgeEl) {
 		  edgeEl.data('path', true);
-		  edgeEl.removeClass("deadend"); // Ensure path edges are never treated as dead ends
+		  edgeEl.removeClass("deadend");
 		}
 	  });
 	  
-	  // Update display based on current options
 	  updateDeadends();
 	});
 	restoreViewState();
 	
-	// Update path description
 	updatePathDescription(path);
   }
 
-  // Update the path description display with improved formatting
   function updatePathDescription(path) {
 	if (!path || !document.getElementById('showpathdesc').checked) {
 	  document.getElementById('pathdesc').innerHTML = '';
@@ -1839,11 +1770,9 @@
 	let totalDays = 0;
 	
 	path.nodes.forEach((nodeId, i) => {
-	  // Add node info first
 	  const node = cy.$id(nodeId).data();
 	  html += `<strong>${node.id} (${node.name})</strong>: ${node.info}<br><br>`;
 	  
-	  // Then add edge info if not the last node
 	  if (i < path.nodes.length - 1) {
 		const edge = path.edges[i];
 		html += `${node.id} → ${path.nodes[i+1]}: ${edge.info} (${edge.days} days)<br><br>`;
@@ -1855,7 +1784,6 @@
 	document.getElementById('pathdesc').innerHTML = html;
   }
 
-  // Recalculate all paths when filters change
   function recalculatePaths() {
 	if (!selectedSource || !selectedTarget || selectedSource === selectedTarget) {
 	  allPaths = [];
@@ -1879,16 +1807,12 @@
 	}
   }
 
-  // Two-circle layout (connected nodes vs dead ends)
   function createTwoCircleLayout() {
-	// Identify dead ends
 	const deadends = cy.nodes().filter(node => node.outgoers('edge').length === 0);
 	const connectedNodes = cy.nodes().difference(deadends);
 	
-	// Calculate positions
 	const positions = {};
 	
-	// Position connected nodes in outer circle
 	const connectedCount = connectedNodes.length;
 	const connectedAngleStep = (2 * Math.PI) / connectedCount;
 	const connectedRadius = 500;
@@ -1902,7 +1826,6 @@
 	  };
 	});
 	
-	// Position dead ends in inner circle
 	const deadendCount = deadends.length;
 	const deadendAngleStep = (2 * Math.PI) / deadendCount;
 	const deadendRadius = 250;
@@ -1921,32 +1844,26 @@
 	  positions: node => positions[node.id()],
 	  animate: false,
 	  animationDuration: 1000,
-	  fit: true, // Don't fit to viewport
+	  fit: true,
 	  padding: 10
 	};
   }
 
-  // Update the dead ends identification and hiding logic
   function updateDeadends() {
 	saveViewState();
 	cy.elements().removeClass("hide");
 
-	// First identify all dead ends (nodes with no outgoing edges)
 	const deadends = cy.nodes().filter(node => {
 	  return node.outgoers('edge').length === 0;
 	});
 
-	// Mark dead ends
 	deadends.addClass("deadend");
 	
-	// Also mark edges leading to dead ends
 	deadends.incomers('edge').addClass("deadend");
 
 	if (nodeadends.checked) {
-	  // Hide dead ends and edges leading to them
 	  cy.$(".deadend").addClass("hide");
 	  
-	  // But don't hide dead ends that are part of the current path
 	  if (currentPathIndex >= 0 && allPaths[currentPathIndex]) {
 		const pathNodes = allPaths[currentPathIndex].nodes;
 		const pathEdges = allPaths[currentPathIndex].edges.map(e => e.edgeId);
@@ -1968,7 +1885,6 @@
 	restoreViewState();
   }
 
-  // Options: Abbreviate tracker names
   const abbrev = document.getElementById("abbrev");
   const updateAbbrev = () => {
 	saveViewState();
@@ -1982,20 +1898,17 @@
   };
   abbrev.addEventListener("change", updateAbbrev);
 
-  // Options: Remove dead ends
   const pathonly = document.getElementById("pathonly");
   const nodeadends = document.getElementById("nodeadends");
   nodeadends.addEventListener("change", updateDeadends);
   pathonly.addEventListener("change", updateDeadends);
 
-  // Layout
   document.getElementById("relayout").addEventListener("click", () => {
 	saveViewState();
 	cy.layout(createTwoCircleLayout()).run();
 	restoreViewState();
   });
 
-  // Additional route info
   let shownTippy;
 
   function makeTippy(node, content) {
@@ -2051,13 +1964,11 @@
 	}
   });
 
-  // Setup event listeners for controls
   document.getElementById('prev-path').addEventListener('click', prevPath);
   document.getElementById('next-path').addEventListener('click', nextPath);
   document.getElementById('scroll-prev').addEventListener('click', prevPath);
   document.getElementById('scroll-next').addEventListener('click', nextPath);
   
-  // Add mouse wheel support for the hover area
   const pathNavHoverArea = document.querySelector('.path-nav-hover-area');
   pathNavHoverArea.addEventListener('wheel', (e) => {
 	e.preventDefault();
@@ -2078,7 +1989,6 @@
 	}
   });
 
-  // Initialize the graph
   cy.ready(() => {
 	initializeSearchableDropdowns();
 	initializeGroupSourcesPanel();
@@ -2088,20 +1998,17 @@
 	cy.layout(createTwoCircleLayout()).run();
   });
 
-  // Options: Show path description
   const showpathdesc = document.getElementById("showpathdesc");
   showpathdesc.addEventListener("change", () => {
 	document.getElementById("pathdesc").style["display"] = showpathdesc.checked ? "" : "none";
   });
 
-  // Event listeners for group selection
   sourceTypeSelect.addEventListener('change', handleSourceTypeChange);
   settingsButton.addEventListener('click', (e) => {
 	e.stopPropagation();
 	groupSourcesDiv.classList.toggle('show');
   });
   
-  // Close settings panel when clicking outside
   document.addEventListener('click', (e) => {
 	if (!groupSourcesDiv.contains(e.target) && e.target !== settingsButton) {
 	  groupSourcesDiv.classList.remove('show');
